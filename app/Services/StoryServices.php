@@ -6,11 +6,13 @@ use App\Repositories\StoryRepository;
 
 class StoryServices
 {
-    public $storyRepository;
+    public StoryRepository $storyRepository;
     public function __construct(StoryRepository $storyRepository)
     {
         $this->storyRepository= $storyRepository;
     }
+
+
 
     public function fetchStories()
     {

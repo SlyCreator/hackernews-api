@@ -12,7 +12,7 @@ Before setting up the project, make sure to install  the following requirements 
 To set up and run the project, follow the steps below:
 1. Clone the repository using the command:
 
-```git clone https://github.com/<username>/<project>.git```
+```git clone https://github.com/SlyCreator/hackernews-api.git```
 
 2. Navigate to the project directory using the command:
 
