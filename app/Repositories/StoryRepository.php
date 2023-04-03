@@ -12,7 +12,7 @@ class StoryRepository
 
     public function saveComment($comment, $storyModelId)
     {
-        if (isset($comment['dead']))return ;
+        if (isset($comment['dead']))return false ;
         return Comment::updateOrCreate(
             ['h_id' => $comment['id']],
             [

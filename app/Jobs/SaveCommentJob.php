@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 
+use App\Repositories\StoryRepository;
 use App\Services\StoryServices;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,6 +20,8 @@ class SaveCommentJob implements ShouldQueue
     private  $storyId;
     public string $base_url ;
 
+    public StoryServices $storyServices;
+
     public function __construct($kidId, $storyId)
     {
         $this->kidId = $kidId;
@@ -26,14 +29,15 @@ class SaveCommentJob implements ShouldQueue
         $this->storyId = $storyId;
     }
 
-    public function handle()
+    public function handle(StoryRepository $storyRepository)
     {
         $response = Http::get("$this->base_url/item/{$this->kidId}.json");
         $comment = $response->json();
 
         if ($comment['type'] === 'comment' && !isset($comment['dead'])) {
-                $storyService=new StoryServices();
-                $storyService->storeComment($comment,$this->storyId);
+
+                $storyRepository->saveComment($comment,$this->storyId);
+
                 SaveUserJob::dispatch($comment->by);
 
 

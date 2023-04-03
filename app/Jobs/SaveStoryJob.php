@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 
+use App\Repositories\StoryRepository;
 use App\Services\StoryServices;
 
 use Illuminate\Bus\Queueable;
@@ -11,12 +12,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Jobs\SaveUserJob;
-use App\Jobs\SaveCommentJob;
+
 class SaveStoryJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $story;
+    public StoryServices $storyServices;
+
     /**
      * Create a new job instance.
      *
@@ -32,10 +34,10 @@ class SaveStoryJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(StoryRepository $storyRepository)
     {
-        $storyService=new StoryServices();
-        $storyModel = $storyService->storeStory($this->story);
+
+       $storyModel = $storyRepository->saveStory($this->story);
 
         SaveUserJob::dispatch($this->story['by']);
         // Dispatch a SaveCommentJob for each comment associated with the story
