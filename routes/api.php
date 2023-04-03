@@ -22,7 +22,5 @@ Route::group([],function(){
     Route::get('/stories',[HackernewsController::class,'indexStories']);
     Route::get('/stories/{id}',[HackernewsController::class,'fetchById']);
 });
-// fix the cron job
-// fix the issue on parent_id
-//fix the issue on user
+
 
